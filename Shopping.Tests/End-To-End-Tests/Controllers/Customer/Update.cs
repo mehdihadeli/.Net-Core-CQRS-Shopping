@@ -11,14 +11,10 @@ namespace Shopping.Tests.Controllers.Customer
     [Collection("TestHostCollection")]
     public class Update 
     {
-        private readonly CustomWebApplicationFactory<Startup> _factory;
-        private readonly HttpClient _anonymousClient;
         private readonly HttpClient _authenticatedClient;
 
         public Update(TestHostFixture testHostFixture)
         {
-            _factory = testHostFixture.Factory;
-            _anonymousClient = testHostFixture.AnonymousClient;
             _authenticatedClient = testHostFixture.AuthenticatedClient;
         }
 
@@ -44,7 +40,7 @@ namespace Shopping.Tests.Controllers.Customer
             };
             var content = E2ETestsUtilities.GetRequestContent(command);
 
-            var response = await _anonymousClient.PutAsync($"/api/customers/update/{command.Id}", content);
+            var response = await _authenticatedClient.PutAsync($"/api/customers/update/{command.Id}", content);
 
             response.EnsureSuccessStatusCode().StatusCode.ShouldBe(HttpStatusCode.NoContent);
 
@@ -72,7 +68,7 @@ namespace Shopping.Tests.Controllers.Customer
             };
             var content = E2ETestsUtilities.GetRequestContent(invalidCommand);
 
-            var response = await _anonymousClient.PutAsync($"/api/customers/update/{invalidCommand.Id}", content);
+            var response = await _authenticatedClient.PutAsync($"/api/customers/update/{invalidCommand.Id}", content);
             
             response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
         }

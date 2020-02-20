@@ -6,9 +6,9 @@ using Common.Core.Domain;
 using Microsoft.AspNetCore.Identity;
 using Shopping.Core.Domains;
 using Shopping.Core.Services;
-using Shopping.Infrastructure.Persistence.Identity;
+using Shopping.Infrastructure.Persistence;
 
-namespace Shopping.Application.User.Services
+namespace Shopping.Application.Services
 {
     public class UserManagerService : IUserManagerService
     {

@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Common.Authentication;
-using Common.EF;
+using Common.Authentication.Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Options;
 using Shopping.Core.Domains;
+using Shopping.Infrastructure.Persistence.Identity.Configurations;
 
-namespace Shopping.Infrastructure.Persistence.Identity
+namespace Shopping.Infrastructure.Persistence
 {
-    public class ApplicationIdentityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>, IIdentityDataContext
+    public class ApplicationIdentityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>,
+        IIdentityDataContext
     {
         private IDbContextTransaction _transaction;
 
@@ -20,6 +25,7 @@ namespace Shopping.Infrastructure.Persistence.Identity
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
         }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }

@@ -1,12 +1,15 @@
-﻿using System.IO;
+﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
 
-namespace Shopping.Infrastructure.Persistence.Identity
+namespace Shopping.Infrastructure.Persistence
 {
     public class ApplicationIdentityDbContextFactory : DesignTimeDbContextFactoryBase<ApplicationIdentityDbContext>
     {
+        public ApplicationIdentityDbContextFactory() : base("DefaultConnection",
+            typeof(ConfigurationContextDesignTimeFactory).GetTypeInfo().Assembly.GetName().Name)
+        {
+        }
+
         protected override ApplicationIdentityDbContext CreateNewInstance(
             DbContextOptions<ApplicationIdentityDbContext> options)
         {

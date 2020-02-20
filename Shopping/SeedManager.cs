@@ -32,6 +32,7 @@ namespace Shopping
         {
             var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
             await mediator.Send(new SeedIdentityCommand(), default);
+            await mediator.Send(new SeedIdentityServerCommand(), default);
         }
 
         private static async Task InitShoppingContext(IServiceScope scope)

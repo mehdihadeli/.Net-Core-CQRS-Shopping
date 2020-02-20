@@ -2,10 +2,9 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Shopping.Core.Domains;
-using Shopping.Infrastructure.Persistence.Shopping;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Tests.EndToEndTests.Common
 {

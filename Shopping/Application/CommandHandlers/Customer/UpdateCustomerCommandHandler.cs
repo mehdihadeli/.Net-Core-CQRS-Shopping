@@ -4,6 +4,7 @@ using Common.Web.Common.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shopping.Core.Commands;
+using Shopping.Infrastructure.Persistence;
 using Shopping.Infrastructure.Persistence.Shopping;
 
 namespace Shopping.Application.CommandHandlers

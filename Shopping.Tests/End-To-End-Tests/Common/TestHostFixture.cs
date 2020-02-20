@@ -11,23 +11,23 @@ namespace Shopping.Tests.EndToEndTests.Common
     {
         public HttpClient AnonymousClient { get; }
         public HttpClient AuthenticatedClient { get; }
-        public CustomWebApplicationFactory<Startup> Factory { get; }
+        private readonly CustomWebApplicationFactory<Startup> _factory;
 
         public TestHostFixture()
         {
-            Factory = new CustomWebApplicationFactory<Startup>();
-            AnonymousClient = Factory.GetAnonymousClient();
-            //AuthenticatedClient = Factory.GetAuthenticatedClientAsync();
+            _factory = new CustomWebApplicationFactory<Startup>();
+            AnonymousClient = _factory.GetAnonymousClient();
+            AuthenticatedClient = _factory.GetAuthenticatedClientAsync().GetAwaiter().GetResult();
         }
 
         public void Dispose()
         {
+            _factory?.Dispose();
             AnonymousClient?.Dispose();
             AuthenticatedClient?.Dispose();
-            Factory?.Dispose();
         }
     }
-    
+
     [CollectionDefinition("TestHostCollection")]
     public class TestHostCollection : ICollectionFixture<TestHostFixture>
     {

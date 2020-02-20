@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Shopping.Core.Services;
 
-namespace Shopping.Application.User.Services
+namespace Shopping.Application.Services
 {
     public class CurrentUserService : ICurrentUserService
     {

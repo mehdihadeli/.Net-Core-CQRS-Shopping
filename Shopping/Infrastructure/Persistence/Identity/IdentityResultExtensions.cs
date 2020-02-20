@@ -2,7 +2,7 @@
 using Common.Core.Domain;
 using Microsoft.AspNetCore.Identity;
 
-namespace Shopping.Infrastructure.Persistence.Identity
+namespace Shopping.Infrastructure.Persistence
 {
     public static class IdentityResultExtensions
     {

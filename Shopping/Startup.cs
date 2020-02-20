@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Mime;
 using System.Text;
 using AutoMapper;
-using Common.Authentication;
 using Common.Redis;
 using Common.Web.Common.Exceptions;
 using Microsoft.AspNetCore.Builder;
@@ -18,7 +17,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Shopping.Application;
 using Shopping.Infrastructure;
-using Shopping.Infrastructure.Persistence.Identity;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping
 {
@@ -31,8 +30,8 @@ namespace Shopping
         }
 
         private IServiceCollection _services;
-        public IConfiguration Configuration { get; }
-        public IWebHostEnvironment Environment { get; }
+        protected IConfiguration Configuration { get; }
+        protected IWebHostEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
@@ -58,11 +57,8 @@ namespace Shopping
             //     opts.Filters.Add<SerilogMvcLoggingAttribute>();
             // });
 
-            //Adding Jwt Authentication
             services.AddInfrastructure(Configuration, Environment);
             services.AddApplication();
-
-            //services.AddJwtAuthentication();
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
@@ -73,7 +69,7 @@ namespace Shopping
             _services = services;
         }
 
-// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public virtual void Configure(IApplicationBuilder app)
         {
             app.UseMiniProfiler();
@@ -96,12 +92,11 @@ namespace Shopping
             app.UseHealthChecks("/health");
             app.UseCors("CorsPolicy");
             app.UseRouting();
-            app.UseHttpsRedirection();
-            
-            // app.UseAuthentication();
-            // app.UseAuthorization();
 
-            //app.UseAccessTokenMiddleware();
+            app.UseAuthentication();
+            app.UseIdentityServer();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}");

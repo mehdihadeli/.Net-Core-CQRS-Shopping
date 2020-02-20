@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Shopping.Core.Domains;
 using Shopping.Core.Services;
 
-namespace Shopping.Infrastructure.Persistence.Identity
+namespace Shopping.Infrastructure.Persistence
 {
     public static class IdentitySeedData
     {

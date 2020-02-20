@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Shopping.Core.Commands;
 using Shopping.Tests.EndToEndTests.Common;
 using Shouldly;
@@ -10,22 +11,17 @@ namespace Shopping.Tests.EndToEndTests.Controllers.Customer
     [Collection("TestHostCollection")]
     public class Create 
     {
-        private readonly CustomWebApplicationFactory<Startup> _factory;
-        private readonly HttpClient _anonymousClient;
         private readonly HttpClient _authenticatedClient;
 
         public Create(TestHostFixture testHostFixture)
         {
-            _factory = testHostFixture.Factory;
-            _anonymousClient = testHostFixture.AnonymousClient;
             _authenticatedClient = testHostFixture.AuthenticatedClient;
         }
 
         [Fact]
         [AutoRollbackAttribute]
-        public void Should_Create_Customer_And_Return_NoContent_StatusCode()
+        public async Task Should_Create_Customer_And_Return_NoContent_StatusCode()
         {
-            // var client = await _factory.GetAuthenticatedClientAsync();
             var command = new CreateCustomerCommand
             {
                 Id = 11,
@@ -41,7 +37,7 @@ namespace Shopping.Tests.EndToEndTests.Controllers.Customer
             };
 
             var content = E2ETestsUtilities.GetRequestContent(command);
-            var response = _anonymousClient.PostAsync($"/api/customers/create", content).Result;
+            var response = await _authenticatedClient.PostAsync($"/api/customers/create", content);
 
             response.EnsureSuccessStatusCode().StatusCode.ShouldBe(HttpStatusCode.NoContent);
         }

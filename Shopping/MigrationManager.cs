@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Threading.Tasks;
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Shopping.Infrastructure.Persistence.Identity;
-using Shopping.Infrastructure.Persistence.Shopping;
+using Microsoft.Extensions.Hosting;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping
 {
@@ -18,6 +18,7 @@ namespace Shopping
                 {
                     MigrateShopping(scope);
                     MigrateIdentity(scope);
+                    MigrateIdentityServer(scope);
                 }
                 catch (Exception)
                 {
@@ -29,17 +30,29 @@ namespace Shopping
             return webHost;
         }
 
+        private static void MigrateIdentityServer(IServiceScope scope)
+        {
+            var persistedGrantDbContext = scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>();
+            persistedGrantDbContext.Database.Migrate();
+
+            var env = scope.ServiceProvider.GetService<IWebHostEnvironment>();
+
+            if (env.IsEnvironment("Test") == false)
+            {
+                var configurationDbContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                configurationDbContext.Database.Migrate();
+            }
+        }
+
         private static void MigrateIdentity(IServiceScope scope)
         {
             var identityDbContext = scope.ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>();
-            identityDbContext.Database.EnsureCreated();
             identityDbContext.Database.Migrate();
         }
 
         private static void MigrateShopping(IServiceScope scope)
         {
             var shoppingDbContext = scope.ServiceProvider.GetRequiredService<ShoppingDbContext>();
-            shoppingDbContext.Database.EnsureCreated();
             shoppingDbContext.Database.Migrate();
         }
     }

@@ -8,9 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="Divergic.Logging.Xunit" Version="3.2.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="Shouldly" Version="3.0.2" />

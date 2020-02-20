@@ -6,7 +6,7 @@ using MediatR;
 using Shopping.Core.Domains;
 using Shopping.Core.Queries;
 using Shopping.Core.ViewModels;
-using Shopping.Infrastructure.Persistence.Shopping;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Application.QueryHandlers
 {

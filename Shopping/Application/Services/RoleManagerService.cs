@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Shopping.Core.Domains;
 using Shopping.Core.Services;
 
-namespace Shopping.Application.User.Services
+namespace Shopping.Application.Services
 {
     public class RoleManagerService: IRoleManagerService
     {

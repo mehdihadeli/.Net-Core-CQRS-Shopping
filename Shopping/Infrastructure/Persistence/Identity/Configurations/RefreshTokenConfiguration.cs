@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Shopping.Infrastructure.Persistence.Identity.Configurations
 {
-    public class RefreshTokenConfiguration: IEntityTypeConfiguration<RefreshToken>
+    public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
     {
         public void Configure(EntityTypeBuilder<RefreshToken> modelBuilder)
         {
             modelBuilder.ToTable("RefreshTokens");
 
-            modelBuilder.HasKey(x => x.Id);
-            modelBuilder.Property(e => e.Id).IsRequired()
-                .ValueGeneratedOnAdd();
+            modelBuilder.Property(e => e.Id)
+                .HasColumnName("Id")
+                .ValueGeneratedNever();
 
             modelBuilder.Property(x => x.UserId);
 
@@ -32,4 +32,3 @@ namespace Shopping.Infrastructure.Persistence.Identity.Configurations
         }
     }
 }
-

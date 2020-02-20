@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Shopping.Core.Commands;
 using Shopping.Core.Domains;
-using Shopping.Infrastructure.Persistence.Shopping;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Application.CommandHandlers
 {

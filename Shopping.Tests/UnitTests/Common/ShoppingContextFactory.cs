@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Shopping.Infrastructure.Persistence.Shopping;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Tests.UnitTests.Common
 {

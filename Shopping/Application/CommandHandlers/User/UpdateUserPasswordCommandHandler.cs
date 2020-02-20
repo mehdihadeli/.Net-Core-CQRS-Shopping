@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Shopping.Core.Commands;
 using Shopping.Core.Events;
 using Shopping.Core.Services;
-using Shopping.Infrastructure.Persistence.Identity;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Application.CommandHandlers.User
 {

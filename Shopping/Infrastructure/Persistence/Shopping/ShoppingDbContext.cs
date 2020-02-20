@@ -1,27 +1,32 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Core.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Shopping.Core.Domains;
 using Shopping.Core.Services;
+using Shopping.Infrastructure.Persistence.Shopping.Configurations;
 
-namespace Shopping.Infrastructure.Persistence.Shopping
+namespace Shopping.Infrastructure.Persistence
 {
     public class ShoppingDbContext : DbContext, IShoppingDataContext
     {
+        private readonly DbContextOptions<ShoppingDbContext> _options;
         private readonly ICurrentUserService _currentUserService;
         private IDbContextTransaction _transaction;
 
-        public ShoppingDbContext(DbContextOptions<ShoppingDbContext> options)
-            : base(options)
+        public ShoppingDbContext(DbContextOptions<ShoppingDbContext> options) : base(options)
         {
+            _options = options;
         }
 
         public ShoppingDbContext(DbContextOptions<ShoppingDbContext> options, ICurrentUserService currentUserService)
             : base(options)
         {
+            _options = options;
             _currentUserService = currentUserService;
         }
 
@@ -69,7 +74,17 @@ namespace Shopping.Infrastructure.Persistence.Shopping
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ShoppingDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new RegionConfiguration());
+            modelBuilder.ApplyConfiguration(new ShipperConfiguration());
+            modelBuilder.ApplyConfiguration(new SupplierConfiguration());
+            modelBuilder.ApplyConfiguration(new TerritoryConfiguration());
         }
 
         public void BeginTransaction()

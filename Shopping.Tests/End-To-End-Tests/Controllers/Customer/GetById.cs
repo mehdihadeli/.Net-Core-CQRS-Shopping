@@ -10,14 +10,10 @@ namespace Shopping.Tests.Controllers.Customer
     [Collection("TestHostCollection")]
     public class GetById 
     {
-        private readonly CustomWebApplicationFactory<Startup> _factory;
-        private readonly HttpClient _anonymousClient;
         private readonly HttpClient _authenticatedClient;
 
         public GetById(TestHostFixture testHostFixture)
         {
-            _factory = testHostFixture.Factory;
-            _anonymousClient = testHostFixture.AnonymousClient;
             _authenticatedClient = testHostFixture.AuthenticatedClient;
         }
 
@@ -28,7 +24,7 @@ namespace Shopping.Tests.Controllers.Customer
 
             var validId = 1;
 
-            var response = await _anonymousClient.GetAsync($"/api/customers/get/{validId}");
+            var response = await _authenticatedClient.GetAsync($"/api/customers/get/{validId}");
 
             response.EnsureSuccessStatusCode();
 
@@ -44,7 +40,7 @@ namespace Shopping.Tests.Controllers.Customer
             
             var invalidId = 0;
 
-            var response = await _anonymousClient.GetAsync($"/api/customers/get/{invalidId}");
+            var response = await _authenticatedClient.GetAsync($"/api/customers/get/{invalidId}");
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }

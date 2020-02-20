@@ -11,14 +11,10 @@ namespace Shopping.Tests.Controllers.Customer
     [Collection("TestHostCollection")]
     public class Delete
     {
-        private readonly CustomWebApplicationFactory<Startup> _factory;
-        private readonly HttpClient _anonymousClient;
         private readonly HttpClient _authenticatedClient;
 
         public Delete(TestHostFixture testHostFixture)
         {
-            _factory = testHostFixture.Factory;
-            _anonymousClient = testHostFixture.AnonymousClient;
             _authenticatedClient = testHostFixture.AuthenticatedClient;
         }
 
@@ -30,7 +26,7 @@ namespace Shopping.Tests.Controllers.Customer
 
             var validId = 1;
 
-            var response = await _anonymousClient.DeleteAsync($"/api/customers/delete/{validId}");
+            var response = await _authenticatedClient.DeleteAsync($"/api/customers/delete/{validId}");
 
             response.EnsureSuccessStatusCode().StatusCode.ShouldBe(HttpStatusCode.NotFound);
         }
@@ -43,7 +39,7 @@ namespace Shopping.Tests.Controllers.Customer
 
             var invalidId = 0;
 
-            var response = await _anonymousClient.DeleteAsync($"/api/customers/delete/{invalidId}");
+            var response = await _authenticatedClient.DeleteAsync($"/api/customers/delete/{invalidId}");
             response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
         }
     }

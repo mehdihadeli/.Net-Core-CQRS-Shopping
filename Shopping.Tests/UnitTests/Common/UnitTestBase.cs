@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Shopping.Infrastructure.Persistence.Identity;
-using Shopping.Infrastructure.Persistence.Shopping;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Tests.UnitTests.Common
 {

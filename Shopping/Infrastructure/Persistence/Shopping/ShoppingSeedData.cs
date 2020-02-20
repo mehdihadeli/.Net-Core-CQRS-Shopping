@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Shopping.Infrastructure.Persistence.Shopping
+namespace Shopping.Infrastructure.Persistence
 {
     public static class ShoppingSeedData
     {

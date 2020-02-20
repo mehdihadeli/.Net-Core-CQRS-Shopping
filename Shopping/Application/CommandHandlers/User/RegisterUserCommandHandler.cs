@@ -3,13 +3,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Shopping.Core.Commands;
 using Shopping.Core.Domains;
 using Shopping.Core.Events;
 using Shopping.Core.Services;
-using Shopping.Infrastructure.Persistence.Identity;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Application.CommandHandlers.User
 {

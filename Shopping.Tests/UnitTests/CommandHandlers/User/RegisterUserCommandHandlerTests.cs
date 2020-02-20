@@ -11,7 +11,7 @@ using Shopping.Core.Commands;
 using Shopping.Core.Domains;
 using Shopping.Core.Events;
 using Shopping.Core.Services;
-using Shopping.Infrastructure.Persistence.Identity;
+using Shopping.Infrastructure.Persistence;
 using Shopping.Tests.UnitTests.Common;
 using Xunit;
 using Xunit.Abstractions;

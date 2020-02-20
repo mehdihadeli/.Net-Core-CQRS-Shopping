@@ -1,11 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Shopping.Application.User.Services;
 using Shopping.Core.Commands;
-using Shopping.Core.Domains;
 using Shopping.Core.Services;
-using Shopping.Infrastructure.Persistence.Identity;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Application.CommandHandlers.User
 {

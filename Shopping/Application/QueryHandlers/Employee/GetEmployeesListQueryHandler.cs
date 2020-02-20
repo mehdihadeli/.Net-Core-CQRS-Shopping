@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Shopping.Core.Dtos;
 using Shopping.Core.Queries;
 using Shopping.Core.ViewModels;
-using Shopping.Infrastructure.Persistence.Shopping;
+using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Application.QueryHandlers
 {
