@@ -37,11 +37,11 @@ namespace Shopping
 
             var env = scope.ServiceProvider.GetService<IWebHostEnvironment>();
 
-            if (env.IsEnvironment("Test") == false)
-            {
+            // if (env.IsEnvironment("Test") == false)
+            // {
                 var configurationDbContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
                 configurationDbContext.Database.Migrate();
-            }
+            //}
         }
 
         private static void MigrateIdentity(IServiceScope scope)

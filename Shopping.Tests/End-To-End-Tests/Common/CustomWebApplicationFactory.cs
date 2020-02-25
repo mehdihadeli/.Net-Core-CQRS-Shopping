@@ -2,11 +2,14 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Shopping.Core.Domains;
 using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Tests.EndToEndTests.Common
@@ -30,12 +33,17 @@ namespace Shopping.Tests.EndToEndTests.Common
             using var scope = sp.CreateScope();
             var scopedServices = scope.ServiceProvider;
             var shoppingDataContext = scopedServices.GetRequiredService<ShoppingDbContext>();
+            var configurationDbContext = scopedServices.GetRequiredService<ConfigurationDbContext>();
+            var userManager = scopedServices.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = scopedServices.GetRequiredService<RoleManager<ApplicationRole>>();
             var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
             try
             {
                 server.Host.MigrateDatabase();
                 // Seed the database with test data.
                 E2ETestsUtilities.InitializeDbForTests(shoppingDataContext);
+                E2ETestsUtilities.InitializeIdentityServerForTests(configurationDbContext);
+                E2ETestsUtilities.InitializeIdentityUserForTests(userManager, roleManager);
             }
             catch (Exception ex)
             {

@@ -12,10 +12,12 @@ namespace Shopping.Tests.EndToEndTests.Controllers.Customer
     public class Create 
     {
         private readonly HttpClient _authenticatedClient;
+        private readonly HttpClient _anonymousClient;
 
         public Create(TestHostFixture testHostFixture)
         {
             _authenticatedClient = testHostFixture.AuthenticatedClient;
+            _anonymousClient  = testHostFixture.AnonymousClient;
         }
 
         [Fact]
@@ -37,7 +39,8 @@ namespace Shopping.Tests.EndToEndTests.Controllers.Customer
             };
 
             var content = E2ETestsUtilities.GetRequestContent(command);
-            var response = await _authenticatedClient.PostAsync($"/api/customers/create", content);
+            var response = await _anonymousClient.PostAsync($"/api/customers/create", content);
+            //var response = await _authenticatedClient.PostAsync($"/api/customers/create", content);
 
             response.EnsureSuccessStatusCode().StatusCode.ShouldBe(HttpStatusCode.NoContent);
         }

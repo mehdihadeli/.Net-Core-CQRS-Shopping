@@ -2,8 +2,12 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Shopping.Core.Domains;
+using Shopping.Infrastructure;
 using Shopping.Infrastructure.Persistence;
 
 namespace Shopping.Tests.EndToEndTests.Common
@@ -57,7 +61,7 @@ namespace Shopping.Tests.EndToEndTests.Common
                     Phone = "232323",
                     HomePage = ""
                 };
-            
+
                 var category1 = new Category
                 {
                     CategoryName = "Test Category",
@@ -80,6 +84,45 @@ namespace Shopping.Tests.EndToEndTests.Common
             }
 
             context.SaveChanges();
+        }
+
+        public static void InitializeIdentityServerForTests(ConfigurationDbContext context)
+        {
+            if (!context.Clients.Any())
+            {
+                foreach (var client in Config.GetClients())
+                {
+                    context.Clients.Add(client.ToEntity());
+                }
+
+                context.SaveChanges();
+            }
+
+            if (!context.IdentityResources.Any())
+            {
+                foreach (var resource in Config.GetIdentityResources())
+                {
+                    context.IdentityResources.Add(resource.ToEntity());
+                }
+
+                context.SaveChanges();
+            }
+
+            if (!context.ApiResources.Any())
+            {
+                foreach (var resource in Config.GetApiResources())
+                {
+                    context.ApiResources.Add(resource.ToEntity());
+                }
+
+                context.SaveChanges();
+            }
+        }
+
+        public static void InitializeIdentityUserForTests(UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager)
+        {
+            IdentitySeedData.SeedAsync(userManager, roleManager).Wait();
         }
     }
 }
