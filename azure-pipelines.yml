@@ -9,6 +9,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+container: mcr.microsoft.com/dotnet/core/sdk
+
 variables:
   buildConfiguration: 'Release'
 
