@@ -38,7 +38,7 @@ namespace Shopping.Infrastructure
             byte[] certData;
             using (var resourceStream =
                 currentAssembly.GetManifestResourceStream(
-                    $"{Assembly.GetCallingAssembly().GetName().Name}.Keys.Shopping.pfx"))
+                    $"{Assembly.GetExecutingAssembly().GetName().Name}.Keys.Shopping.pfx"))
             {
                 using (var memoryStream = new MemoryStream())
                 {
