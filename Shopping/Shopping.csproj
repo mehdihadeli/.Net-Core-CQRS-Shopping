@@ -43,18 +43,6 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.1-dev-00216" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="4.1.0-dev-00166" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <EmbeddedResource Include="Keys\Shopping.cer">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Keys\Shopping.key">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <None Include="Keys\Shopping.pfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
@@ -64,7 +52,15 @@
     <Folder Include="Application\EventHandlers\Category" />
     <Folder Include="Application\EventHandlers\Employee" />
     <Folder Include="Core\Extensions" />
-    <Folder Include="Keys" />
     <Folder Include="Migrations" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Keys\Shopping.crt" />
+    <EmbeddedResource Include="Keys\Shopping.crt" />
+    <None Remove="Keys\Shopping.key" />
+    <EmbeddedResource Include="Keys\Shopping.key" />
+    <None Remove="Keys\Shopping.pfx" />
+    <EmbeddedResource Include="Keys\Shopping.pfx" />
   </ItemGroup>
 </Project>

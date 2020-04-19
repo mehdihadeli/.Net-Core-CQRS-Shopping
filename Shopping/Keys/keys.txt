@@ -1,0 +1,3 @@
+ 
+ openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout Shopping.key -out Shopping.crt -subj "/CN=Shopping.com" -days 3650
+ openssl pkcs12 -export -out Shopping.pfx -inkey Shopping.key -in Shopping.crt -certfile Shopping.crt

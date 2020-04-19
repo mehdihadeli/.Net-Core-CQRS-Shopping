@@ -377,7 +377,7 @@
           </e>
         </e>
         <e p="keys" t="Include">
-          <e p="Shopping.cer" t="Include" />
+          <e p="Shopping.crt" t="Include" />
           <e p="Shopping.key" t="Include" />
           <e p="Shopping.pfx" t="Include" />
         </e>
