@@ -1,5 +1,5 @@
 pool:
-  vmImage: 'ubuntu-16.04'
+  vmImage: 'windows-latest'
 
 
 
@@ -8,7 +8,13 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
-  displayName: Build
+  displayName: publish
+  inputs:
+    command: publish
+    projects: 'Shopping/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: build
   inputs:
     command: build
     projects: 'Shopping/*.csproj'
