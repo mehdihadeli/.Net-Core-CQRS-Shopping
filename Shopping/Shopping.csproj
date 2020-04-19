@@ -51,9 +51,9 @@
     <EmbeddedResource Include="Keys\Shopping.key">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Keys\Shopping.pfx">
+    <None Include="Keys\Shopping.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
