@@ -11,5 +11,5 @@ steps:
   displayName: Build
   inputs:
     command: build
-    projects: '**/*.csproj'
+    projects: 'Shopping/*.csproj'
     arguments: '--configuration release'
