@@ -12,4 +12,3 @@ steps:
   inputs:
     command: build
     projects: 'Shopping/*.csproj'
-    arguments: '--configuration release'
