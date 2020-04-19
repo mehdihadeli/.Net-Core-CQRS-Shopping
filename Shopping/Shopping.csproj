@@ -45,9 +45,15 @@
   </ItemGroup>
   
   <ItemGroup>
-    <EmbeddedResource Include="Keys\Shopping.cer" />
-    <EmbeddedResource Include="Keys\Shopping.key" />
-    <EmbeddedResource Include="Keys\Shopping.pfx" />
+    <EmbeddedResource Include="Keys\Shopping.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Keys\Shopping.key">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Keys\Shopping.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
