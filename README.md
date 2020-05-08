@@ -1,0 +1,1 @@
+[![Build Status](https://mehdihadeli-git.visualstudio.com/NET-CQRS-Pipeline/_apis/build/status/mehdihadeli..Net-Core-CQRS-Shopping?branchName=master)](https://mehdihadeli-git.visualstudio.com/NET-CQRS-Pipeline/_build/latest?definitionId=5&branchName=master)

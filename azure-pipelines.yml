@@ -1,30 +1,35 @@
 pool:
-  vmImage: 'ubuntu-16.04'
+  vmImage: 'ubuntu-latest'
 
-container: mcr.microsoft.com/dotnet/core/sdk:3.1
+container: mcr.microsoft.com/dotnet/core/sdk:3.1.100
 
 variables:
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  buildConfiguration: 'Release'
+  rid: 'linux-x64'
 
 steps:
 - task: DotNetCoreCLI@2
-  displayName: Build
+  displayName: 'dotnet build $(buildConfiguration)'
   inputs:
-    command: build
-    projects: '**/*.csproj'
-    arguments: '--configuration release'
+     command: 'build'
+     arguments: '-r $(rid) --configuration $(buildConfiguration) /p:SourceRevisionId=$(Build.SourceVersion)'
+- task: DotNetCoreCLI@2
+  displayName: "Test"
+  inputs:
+    command: test
+    projects: '**/*tests/*.csproj'
+    arguments: '--runtime $(rid) --configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
-  displayName: Publish
+  displayName: "Publish"
   inputs:
-    command: publish
-    projects: 'Shopping/Shopping.csproj'
-    publishWebProjects: false
-    zipAfterPublish: false
-    arguments: '--configuration release'
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '-r $(rid) --no-build --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
 
-- task: PublishPipelineArtifact@0
-  displayName: Store artefact
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts"
   inputs:
-    artifactName: 'MyProject'
-    targetPath: 'Shopping/bin/release/netcoreapp3.1/publish/'
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'hanselminutes'
