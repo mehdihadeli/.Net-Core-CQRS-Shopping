@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
@@ -15,6 +16,9 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NSwag;
+using NSwag.AspNetCore;
+using NSwag.Generation.Processors.Security;
 using Shopping.Application;
 using Shopping.Infrastructure;
 using Shopping.Infrastructure.Persistence;
@@ -64,7 +68,33 @@ namespace Shopping
                 .AddNewtonsoftJson();
 
             services.AddRazorPages();
-            services.AddOpenApiDocument(configure => { configure.Title = "Auth Server"; });
+            services.AddOpenApiDocument(document =>
+                    {
+                        document.AddSecurity("bearer", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                        {
+                            Type = OpenApiSecuritySchemeType.OAuth2,
+                            Description = "Authentication",
+                            Flow = OpenApiOAuth2Flow.Implicit,
+                            Flows = new OpenApiOAuthFlows()
+                            {
+                                Implicit = new OpenApiOAuthFlow()
+                                {
+                                    Scopes = new Dictionary<string, string>
+                                    {
+                                        {"Shopping.API", "Shopping API"}
+
+                                    },
+                                    TokenUrl = "http://localhost:8000/connect/token",
+                                    AuthorizationUrl = "http://localhost:8000/connect/authorize",
+
+                                },
+                            }
+                        });
+
+                        document.OperationProcessors.Add(
+                            new AspNetCoreOperationSecurityScopeProcessor("bearer"));
+                    }
+                );
 
             _services = services;
         }
@@ -104,7 +134,16 @@ namespace Shopping
                 endpoints.MapRazorPages();
             });
             app.UseOpenApi();
-            app.UseSwaggerUi3();
+            app.UseSwaggerUi3(settings =>
+            {
+                settings.OAuth2Client = new OAuth2ClientSettings
+                {
+                    ClientId = "demo_api_swagger",
+
+                    AppName = "Auth Server API - Swagger",
+
+                };
+            });
 
             #region Healthchecks
 
@@ -117,7 +156,7 @@ namespace Shopping
                 {
                     Status = rpt.Status.ToString(),
                     Errors = rpt.Entries.Select(e => new
-                        {key = e.Key, value = Enum.GetName(typeof(HealthStatus), e.Value.Status)})
+                    { key = e.Key, value = Enum.GetName(typeof(HealthStatus), e.Value.Status) })
                 }, Formatting.None, new JsonSerializerSettings()
                 {
                     NullValueHandling = NullValueHandling.Ignore,

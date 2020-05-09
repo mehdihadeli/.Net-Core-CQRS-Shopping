@@ -53,63 +53,15 @@ namespace Shopping.Infrastructure
                     ClientSecrets = {new Secret("secret".Sha256())},
                     AllowedScopes = {"Shopping.API", "openid", "profile"}
                 },
-                // new Client
-                // {
-                //     ClientId = "shopping.app",
-                //     ClientName = "Shopping Backend Application",
-                //     Description = "Secure client using ResourceOwnerPassword flow",
-                //     ClientSecrets = new[] {new Secret("5aKtv2wvyP".Sha256())},
-                //     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                //     AllowedScopes = new[]
-                //     {
-                //         "shopping.api"
-                //     }
-                // },
-                // new Client
-                // {
-                //     ClientId = "shopping.js",
-                //     ClientName = "Shopping JavaScrip Web Application",
-                //     Description = "Un secure static content client",
-                //     ClientSecrets = new[] {new Secret("5aKtv2wvyP".Sha256())},
-                //     AllowedGrantTypes = GrantTypes.Implicit,
-                //     AllowedScopes = new[]
-                //     {
-                //         IdentityServerConstants.StandardScopes.OpenId,
-                //         IdentityServerConstants.StandardScopes.Profile,
-                //         "shopping.api"
-                //     },
-                //     AllowAccessTokensViaBrowser = true,
-                //     RedirectUris = new[] {"https://localhost:5004/signin-oidc"},
-                //     PostLogoutRedirectUris = {"https://localhost:5004/signout-callback-oidc"},
-                // },
-                // new Client
-                // {
-                //     ClientId = "shopping.web",
-                //     ClientName = "Shopping Web Application",
-                //     Description = "Web application client with back-channel",
-                //     ClientSecrets = new[] {new Secret("5aKtv2wvyP".Sha256())},
-                //     AllowedGrantTypes = GrantTypes.Hybrid,
-                //     AllowedScopes = new[]
-                //     {
-                //         IdentityServerConstants.StandardScopes.OpenId,
-                //         IdentityServerConstants.StandardScopes.Profile,
-                //         IdentityServerConstants.StandardScopes.Email,
-                //         "shopping.api"
-                //     },
-                //     AccessTokenLifetime = (int) TimeSpan.FromHours(1).TotalSeconds,
-                //     AuthorizationCodeLifetime = (int) TimeSpan.FromMinutes(5).TotalSeconds,
-                //     AllowOfflineAccess = true,
-                //     AllowAccessTokensViaBrowser = true,
-                //     RequireConsent = false,
-                //     RedirectUris = new[]
-                //     {
-                //         "https://localhost:5004/signin-oidc"
-                //     },
-                //     PostLogoutRedirectUris =
-                //     {
-                //         "https://localhost:5004/signout-callback-oidc"
-                //     },
-                // }
+                new Client {
+                    ClientId = "demo_api_swagger",
+                    ClientName = "Swagger UI for demo_api",
+                    AllowedGrantTypes = new List<string>(){GrantType.Implicit,GrantType.ResourceOwnerPassword},
+                    AllowAccessTokensViaBrowser = true,
+                    RedirectUris = {"https://localhost:44304/swagger/oauth2-redirect.html"},
+                    AllowedScopes = { "Shopping.API" }
+                },
+
             };
         }
     }
